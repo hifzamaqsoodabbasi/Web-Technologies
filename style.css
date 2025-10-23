@@ -1,19 +1,15 @@
-/* External CSS File: style.css */
-
-/* Styling the body */
+/* External CSS */
 body {
-    background-color: #f4f4f4;
-    font-family: 'Verdana', sans-serif;
+  background-color: #07f5e9;
+  font-family: Verdana, sans-serif;
 }
 
-/* Styling the h3 heading */
 h3 {
-    color: darkblue;
-    font-size: 20px;
+  color: rgb(35, 44, 2);
+  font-weight: bold;
 }
 
-/* Styling the paragraph */
-p {
-    color: darkgray;
-    font-size: 16px;
+p.external {
+  color: navy;
+  font-size: 16px;
 }
