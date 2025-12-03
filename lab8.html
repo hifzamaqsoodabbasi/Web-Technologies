@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Playground | JavaScript Event Listeners</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 219, 222, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0ff;
+            margin-bottom: 25px;
+        }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #00dbde;
+            margin-bottom: 30px;
+        }
+
+        .instructions h2 {
+            color: #00dbde;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .instructions li:before {
+            content: '▶';
+            color: #fc00ff;
+            position: absolute;
+            left: 0;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .interactive-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-section:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 219, 222, 0.3);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: #00dbde;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid rgba(0, 219, 222, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* Interactive Elements Styling */
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .color-box {
+            height: 70px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid transparent;
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        .morph-shapes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .shape {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .text-manipulator {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .text-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .text-box:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #00dbde;
+        }
+
+        .counter-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .counter-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: #00dbde;
+            text-shadow: 0 0 10px rgba(0, 219, 222, 0.5);
+        }
+
+        .counter-controls {
+            display: flex;
+            gap: 20px;
+        }
+
+        .counter-btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .counter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 219, 222, 0.5);
+        }
+
+        .draggable-container {
+            height: 200px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .draggable-item {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            position: absolute;
+            user-select: none;
+        }
+
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+
+        .hidden-objects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .hidden-item {
+            background: rgba(255, 255, 255, 0.1);
+            height: 100px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .hidden-item:hover {
+            border-color: #ffa726;
+        }
+
+        /* Using 'this' keyword demonstration */
+        .this-keyword-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .this-element {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .this-element:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Feedback and Log */
+        .feedback-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 1px solid rgba(0, 219, 222, 0.2);
+        }
+
+        .log-title {
+            color: #00dbde;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #eventLog {
+            height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .log-entry {
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border-left: 4px solid;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Reflection Section */
+        .reflection {
+            background: linear-gradient(135deg, rgba(0, 219, 222, 0.1), rgba(252, 0, 255, 0.1));
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(0, 219, 222, 0.3);
+        }
+
+        .reflection h2 {
+            color: #00dbde;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reflection p {
+            line-height: 1.8;
+            color: #e0e0ff;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #a0a0ff;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-palette {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-magic"></i> Interactive JavaScript Playground</h1>
+            <p class="subtitle">Experiment 8: Mastering Event Listeners & DOM Manipulation</p>
+            <p>Explore various interactive elements powered by JavaScript event listeners</p>
+        </header>
+
+        <div class="instructions">
+            <h2><i class="fas fa-graduation-cap"></i> How to Interact:</h2>
+            <ul>
+                <li>Click on color boxes to change the theme</li>
+                <li>Hover over shapes to see them morph</li>
+                <li>Click text boxes to transform them</li>
+                <li>Use counter buttons to increase/decrease values</li>
+                <li>Drag the circle around its container</li>
+                <li>Find hidden objects by clicking on tiles</li>
+                <li>Try the "this" keyword demo section</li>
+            </ul>
+        </div>
+
+        <div class="dashboard">
+            <!-- Color Changer Section -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-palette"></i> Color Palette Changer</h3>
+                <p>Click any color to change the page theme</p>
+                <div class="color-palette">
+                    <div class="color-box" style="background: #ff6b6b;" data-color="#ff6b6b">🔥</div>
+                    <div class="color-box" style="background: #4ecdc4;" data-color="#4ecdc4">💧</div>
+                    <div class="color-box" style="background: #ffeaa7;" data-color="#ffeaa7">☀️</div>
+                    <div class="color-box" style="background: #a29bfe;" data-color="#a29bfe">🌌</div>
+                </div>
+            </section>
+
+            <!-- Shape Morphing Section -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-shapes"></i> Shape Morphing</h3>
+                <p>Hover over shapes to see them transform</p>
+                <div class="morph-shapes">
+                    <div class="shape" data-shape="circle">○</div>
+                    <div class="shape" data-shape="triangle">△</div>
+                    <div class="shape" data-shape="diamond">◇</div>
+                    <div class="shape" data-shape="star">★</div>
+                </div>
+            </section>
+
+            <!-- Text Manipulation Section -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-font"></i> Text Transformer</h3>
+                <p>Click on text boxes to see them change</p>
+                <div class="text-manipulator">
+                    <div class="text-box" data-action="uppercase">Click me to UPPERCASE</div>
+                    <div class="text-box" data-action="reverse">Click to reverse this text</div>
+                    <div class="text-box" data-action="rainbow">Make me colorful!</div>
+                </div>
+            </section>
+
+            <!-- Counter Section -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-calculator"></i> Interactive Counter</h3>
+                <p>Use buttons to control the counter</p>
+                <div class="counter-display">
+                    <div class="counter-value" id="counter">0</div>
+                    <div class="counter-controls">
+                        <button class="counter-btn" id="decrement">- Decrease</button>
+                        <button class="counter-btn" id="increment">+ Increase</button>
+                        <button class="counter-btn" id="reset">Reset</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Draggable Element -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-arrows-alt"></i> Draggable Element</h3>
+                <p>Drag the circle around the container</p>
+                <div class="draggable-container" id="dragContainer">
+                    <div class="draggable-item" id="draggable">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hidden Objects Game -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-search"></i> Hidden Objects</h3>
+                <p>Find the hidden objects by clicking tiles</p>
+                <div class="hidden-objects">
+                    <div class="hidden-item">?</div>
+                    <div class="hidden-item">?</div>
+                    <div class="hidden-item">?</div>
+                    <div class="hidden-item">?</div>
+                    <div class="hidden-item">?</div>
+                    <div class="hidden-item">?</div>
+                </div>
+                <p id="foundCount" style="margin-top: 15px;">Found: 0/2 hidden objects</p>
+            </section>
+
+            <!-- 'this' Keyword Demonstration -->
+            <section class="interactive-section">
+                <h3 class="section-title"><i class="fas fa-code"></i> 'this' Keyword Demo</h3>
+                <p>Each element uses 'this' to reference itself</p>
+                <div class="this-keyword-demo">
+                    <div class="this-element">Click me #1</div>
+                    <div class="this-element">Click me #2</div>
+                    <div class="this-element">Click me #3</div>
+                    <div class="this-element">Click me #4</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Event Log -->
+        <div class="feedback-panel">
+            <h3 class="log-title"><i class="fas fa-history"></i> Event Log</h3>
+            <div id="eventLog">
+                <!-- Event logs will appear here -->
+                <div class="log-entry" style="border-left-color: #4ecdc4;">
+                    [System] Interactive playground loaded. Start interacting!
+                </div>
+            </div>
+        </div>
+
+        <!-- Reflection Section -->
+        <div class="reflection">
+            <h2><i class="fas fa-lightbulb"></i> Learning Reflection</h2>
+            <p id="reflectionText">
+                This open-ended experiment taught me the power of JavaScript event listeners in creating dynamic, user-driven web experiences. 
+                Designing various interactions helped me understand how different events (click, hover, drag) can be harnessed to make webpages 
+                responsive and engaging. Using the 'this' keyword was particularly enlightening—it showed me how to access and manipulate 
+                the specific element that triggered an event without needing complex selectors. I learned that event handling isn't just about 
+                making things happen, but about creating intuitive, responsive interfaces that communicate with users. The creative freedom 
+                in this experiment pushed me to think about user experience and how small interactions can make a webpage feel alive and 
+                interactive. This foundation prepares me for more complex logic and real-world web applications.
+            </p>
+        </div>
+
+        <footer>
+            <p>Experiment 8: JavaScript Event Listeners | Course: CSS-336 | Fall 2025</p>
+            <p>Created with <i class="fas fa-heart" style="color: #ff6b6b;"></i> using HTML, CSS & JavaScript</p>
+        </footer>
+    </div>
+
+    <script>
+        // Log event to the feedback panel
+        function logEvent(message, color = "#4ecdc4") {
+            const log = document.getElementById('eventLog');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.style.borderLeftColor = color;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Color Palette Changer
+        document.querySelectorAll('.color-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const color = this.getAttribute('data-color');
+                document.body.style.background = `linear-gradient(135deg, ${color}30, #302b63, #24243e)`;
+                logEvent(`Changed theme to ${this.textContent} color`, color);
+                
+                // 'this' keyword demonstration - changing the clicked element
+                this.style.transform = 'scale(1.2)';
+                this.style.boxShadow = `0 0 20px ${color}`;
+                
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                }, 300);
+            });
+        });
+
+        // Shape Morphing
+        document.querySelectorAll('.shape').forEach(shape => {
+            shape.addEventListener('mouseenter', function() {
+                const shapeType = this.getAttribute('data-shape');
+                switch(shapeType) {
+                    case 'circle':
+                        this.style.borderRadius = '50%';
+                        this.style.transform = 'rotate(180deg)';
+                        break;
+                    case 'triangle':
+                        this.style.borderRadius = '0';
+                        this.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+                        break;
+                    case 'diamond':
+                        this.style.borderRadius = '0';
+                        this.style.transform = 'rotate(45deg)';
+                        break;
+                    case 'star':
+                        this.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+                        break;
+                }
+                logEvent(`Morphed ${shapeType} shape`, '#ffa726');
+            });
+
+            shape.addEventListener('mouseleave', function() {
+                this.style.borderRadius = '20px';
+                this.style.transform = 'rotate(0deg)';
+                this.style.clipPath = '';
+            });
+        });
+
+        // Text Manipulation
+        document.querySelectorAll('.text-box').forEach(box => {
+            box.addEventListener('click', function() {
+                const action = this.getAttribute('data-action');
+                const originalText = this.textContent;
+                
+                switch(action) {
+                    case 'uppercase':
+                        this.textContent = this.textContent.toUpperCase();
+                        this.style.color = '#ff6b6b';
+                        this.style.fontWeight = 'bold';
+                        break;
+                    case 'reverse':
+                        this.textContent = this.textContent.split('').reverse().join('');
+                        this.style.color = '#4ecdc4';
+                        this.style.fontStyle = 'italic';
+                        break;
+                    case 'rainbow':
+                        this.style.background = 'linear-gradient(45deg, #ff6b6b, #ffa726, #ffeaa7, #4ecdc4, #a29bfe)';
+                        this.style.color = 'white';
+                        this.style.textShadow = '0 2px 4px rgba(0,0,0,0.3)';
+                        break;
+                }
+                
+                logEvent(`Transformed text: "${originalText}" → "${this.textContent}"`, '#a29bfe');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style = '';
+                }, 2000);
+            });
+        });
+
+        // Interactive Counter
+        let counter = 0;
+        const counterElement = document.getElementById('counter');
+        
+        document.getElementById('increment').addEventListener('click', function() {
+            counter++;
+            counterElement.textContent = counter;
+            counterElement.style.transform = 'scale(1.2)';
+            setTimeout(() => counterElement.style.transform = 'scale(1)', 200);
+            logEvent(`Counter increased to ${counter}`, '#00dbde');
+        });
+        
+        document.getElementById('decrement').addEventListener('click', function() {
+            counter--;
+            counterElement.textContent = counter;
+            counterElement.style.transform = 'scale(0.8)';
+            setTimeout(() => counterElement.style.transform = 'scale(1)', 200);
+            logEvent(`Counter decreased to ${counter}`, '#fc00ff');
+        });
+        
+        document.getElementById('reset').addEventListener('click', function() {
+            counter = 0;
+            counterElement.textContent = counter;
+            counterElement.style.color = '#ff6b6b';
+            setTimeout(() => counterElement.style.color = '#00dbde', 500);
+            logEvent('Counter reset to 0', '#ff6b6b');
+        });
+
+        // Draggable Element
+        const draggable = document.getElementById('draggable');
+        const container = document.getElementById('dragContainer');
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        draggable.addEventListener('mousedown', startDrag);
+        draggable.addEventListener('touchstart', startDragTouch);
+
+        function startDrag(e) {
+            isDragging = true;
+            offsetX = e.clientX - draggable.getBoundingClientRect().left;
+            offsetY = e.clientY - draggable.getBoundingClientRect().top;
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            draggable.style.cursor = 'grabbing';
+            logEvent('Started dragging element', '#4ecdc4');
+        }
+
+        function startDragTouch(e) {
+            isDragging = true;
+            const touch = e.touches[0];
+            offsetX = touch.clientX - draggable.getBoundingClientRect().left;
+            offsetY = touch.clientY - draggable.getBoundingClientRect().top;
+            document.addEventListener('touchmove', dragTouch);
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            const x = e.clientX - offsetX - container.getBoundingClientRect().left;
+            const y = e.clientY - offsetY - container.getBoundingClientRect().top;
+            
+            // Keep within container bounds
+            const maxX = container.clientWidth - draggable.clientWidth;
+            const maxY = container.clientHeight - draggable.clientHeight;
+            
+            draggable.style.left = Math.max(0, Math.min(x, maxX)) + 'px';
+            draggable.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
+        }
+
+        function dragTouch(e) {
+            if (!isDragging) return;
+            const touch = e.touches[0];
+            const x = touch.clientX - offsetX - container.getBoundingClientRect().left;
+            const y = touch.clientY - offsetY - container.getBoundingClientRect().top;
+            
+            const maxX = container.clientWidth - draggable.clientWidth;
+            const maxY = container.clientHeight - draggable.clientHeight;
+            
+            draggable.style.left = Math.max(0, Math.min(x, maxX)) + 'px';
+            draggable.style.top = Math.max(0, Math.min(y, maxY)) + 'px';
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('touchmove', dragTouch);
+            document.removeEventListener('mouseup', stopDrag);
+            draggable.style.cursor = 'grab';
+            logEvent('Stopped dragging element', '#4ecdc4');
+        }
+
+        // Hidden Objects Game
+        let foundObjects = 0;
+        const totalObjects = 2;
+        const hiddenItems = document.querySelectorAll('.hidden-item');
+        const foundCountElement = document.getElementById('foundCount');
+        
+        // Randomly assign hidden objects
+        const hiddenIndexes = new Set();
+        while (hiddenIndexes.size < totalObjects) {
+            hiddenIndexes.add(Math.floor(Math.random() * hiddenItems.length));
+        }
+        
+        hiddenItems.forEach((item, index) => {
+            item.addEventListener('click', function() {
+                if (hiddenIndexes.has(index) && !this.classList.contains('found')) {
+                    this.classList.add('found');
+                    this.innerHTML = '<i class="fas fa-gem" style="color: #ffeaa7; font-size: 2rem;"></i>';
+                    this.style.background = 'linear-gradient(45deg, #ffeaa7, #ffa726)';
+                    foundObjects++;
+                    foundCountElement.textContent = `Found: ${foundObjects}/${totalObjects} hidden objects`;
+                    foundCountElement.style.color = '#4ecdc4';
+                    
+                    logEvent(`Found hidden object ${foundObjects}!`, '#ffeaa7');
+                    
+                    if (foundObjects === totalObjects) {
+                        setTimeout(() => {
+                            alert('🎉 Congratulations! You found all hidden objects!');
+                            logEvent('All hidden objects found! Game complete!', '#ff6b6b');
+                        }, 300);
+                    }
+                } else if (!this.classList.contains('found')) {
+                    this.innerHTML = '<i class="fas fa-times" style="color: #ff6b6b;"></i>';
+                    this.style.background = '#ff6b6b';
+                    setTimeout(() => {
+                        this.innerHTML = '?';
+                        this.style.background = '';
+                    }, 500);
+                    logEvent('Empty space clicked', '#ff6b6b');
+                }
+            });
+        });
+
+        // 'this' Keyword Demonstration
+        document.querySelectorAll('.this-element').forEach(element => {
+            element.addEventListener('click', function() {
+                // Using 'this' to reference the clicked element
+                const originalText = this.textContent;
+                const randomColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                
+                this.style.background = randomColor;
+                this.style.transform = 'scale(1.1) rotate(5deg)';
+                this.style.color = 'white';
+                this.textContent = `You clicked: "${originalText}"`;
+                
+                logEvent(`Clicked 'this' element: ${originalText}`, randomColor);
+                
+                setTimeout(() => {
+                    this.style.background = '';
+                    this.style.transform = '';
+                    this.style.color = '';
+                    this.textContent = originalText;
+                }, 1500);
+            });
+        });
+
+        // Initialize with a welcome message
+        window.addEventListener('load', () => {
+            logEvent('Page fully loaded. All event listeners are active!', '#00dbde');
+        });
+    </script>
+</body>
+</html>

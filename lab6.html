@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Technologies Handout - Responsive Design</title>
+    <style>
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: antiquewhite;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: navy;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+
+        h2, h3 {
+            color: darkslategray;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        #center {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        /* Desktop Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 900px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Desktop List Styling */
+        .desktop-list {
+            display: block;
+            width: 100%;
+        }
+
+        .desktop-list ol {
+            list-style-type: decimal;
+            padding-left: 40px;
+            margin: 20px 0;
+        }
+
+        .desktop-list li {
+            margin: 12px 0;
+            padding: 8px;
+            background-color: #e9ecef;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+
+        /* Mobile Container - Hidden by default */
+        .mcontainer {
+            display: none;
+            background-color: #e3f2fd;
+            border: 2px solid #90caf9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        /* Mobile List Styling */
+        .mobile-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .mobile-list ol {
+            list-style-type: none;
+            width: 100%;
+        }
+
+        .mobile-list li {
+            margin: 10px 0;
+            padding: 12px;
+            background-color: white;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            text-align: center;
+            color: #1565c0;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        /* Special styling for last item using align-self */
+        .mobile-list li:last-child {
+            align-self: center;
+            background-color: #bbdefb;
+            font-size: 1.1em;
+        }
+
+        .desktop-list li:last-child {
+            align-self: flex-end;
+            background-color: #d1ecf1;
+            border-left-color: #17a2b8;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media only screen and (max-width: 480px) {
+            body {
+                background-color: aqua;
+                padding: 10px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            
+            h2, h3 {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                display: none;
+            }
+            
+            .mcontainer {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .mobile-list {
+                width: 100%;
+            }
+            
+            #center {
+                font-size: 1.1em;
+                color: #0d47a1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Web Technologies Handout</h1>
+    <h2>Course: CSS-336 (2+1)</h2>
+    <p id="center">Semester: Fall 2025</p>
+    <h3>Name: HIFZA MAQSOOD<br>Registration ID: FA22-BCE-074</h3>
+    
+    <!-- Desktop Layout -->
+    <div class="container">
+        <p>Following are the list of experiments:</p>
+        <div class="desktop-list">
+            <ol>
+                <li>Experiment 1: Introduction to HTML Basics</li>
+                <li>Experiment 2: Creating and Publishing an Online Lab Manual</li>
+                <li>Experiment 3: Working with Tables, Lists, Images, and Hyperlinks</li>
+                <li>Experiment 4: Applying CSS to HTML (Inline, Internal, and External Styles)</li>
+                <li>Experiment 5: Exploring CSS Selectors</li>
+                <li>Experiment 6: Web Responsiveness</li>
+            </ol>
+        </div>
+    </div>
+    
+    <!-- Mobile Layout -->
+    <div class="mcontainer">
+        <div class="mobile-list">
+            <p>Lab Experiments:</p>
+            <ol>
+                <li>Lab1</li>
+                <li>Lab2</li>
+                <li>Lab3</li>
+                <li>Lab4</li>
+                <li>Lab5</li>
+                <li>Lab6</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        // Optional: Add interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const listItems = document.querySelectorAll('.desktop-list li, .mobile-list li');
+            listItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                    this.style.transition = 'transform 0.2s';
+                });
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

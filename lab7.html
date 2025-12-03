@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 7: JavaScript Fundamentals</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h2 {
+            color: #444;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #764ba2;
+            padding-bottom: 8px;
+        }
+        
+        .task-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+            min-width: 180px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        button.secondary {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            box-shadow: 0 4px 6px rgba(76, 175, 80, 0.3);
+        }
+        
+        .output-section {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #bbdefb;
+            display: none;
+        }
+        
+        .output-section h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+        }
+        
+        .output-section p {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .console-output {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .console-title {
+            color: #4CAF50;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .code-snippet {
+            background-color: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .instructions {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        
+        .instructions h3 {
+            color: #856404;
+            border-bottom: 1px solid #ffeaa7;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: white;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Experiment 7: JavaScript Fundamentals</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <p>1. Click buttons below to test JavaScript functionality</p>
+            <p>2. Open Chrome Dev Tools (F12) and check Console tab for output</p>
+            <p>3. Complete both lab tasks as required</p>
+        </div>
+        
+        <!-- Given Code Demonstrations -->
+        <section class="task-section">
+            <h2>🎯 Given Code Demonstrations</h2>
+            
+            <div class="code-snippet">
+                <strong>Code Snippet 1: Displaying Messages</strong><br>
+                alert("Welcome to JavaScript!");<br>
+                console.log("Hello Students!");
+            </div>
+            
+            <div class="button-group">
+                <button onclick="demoAlert()">Test Alert Message</button>
+                <button onclick="demoConsole()">Test Console Message</button>
+            </div>
+            
+            <div class="code-snippet">
+                <strong>Code Snippet 2: Variables and Data Types</strong><br>
+                var name = "HIFZA";<br>
+                var age = 23;<br>
+                var isStudent = true;<br>
+                var marks;<br>
+                var value = null;<br>
+                console.log(typeof name); // string<br>
+                console.log(typeof age); // number<br>
+                console.log(typeof isStudent); // boolean<br>
+                console.log(typeof value); // object
+            </div>
+            
+            <div class="button-group">
+                <button onclick="demoDataTypes()">Test Data Types</button>
+            </div>
+            
+            <div class="code-snippet">
+                <strong>Code Snippet 3: String and Arithmetic Operations</strong><br>
+                var country = "Pakistan";<br>
+                console.log("I love " + country);<br>
+                console.log(country.slice(0, 4)); // "Paki"<br>
+                var a = 10, b = 3;<br>
+                console.log("Sum: ", a + b);<br>
+                console.log("Modulus: ", a % b);<br>
+                console.log("Comparison: ", a > b);
+            </div>
+            
+            <div class="button-group">
+                <button onclick="demoOperations()">Test Operations</button>
+            </div>
+        </section>
+        
+        <!-- Lab Task 1 -->
+        <section class="task-section">
+            <h2>📝 Lab Task 1: User Information</h2>
+            <p>Create a button that asks for Name and Registration ID using prompt() and displays them using alert()</p>
+            
+            <div class="button-group">
+                <button onclick="task1()" class="secondary">Task 1: Enter User Info</button>
+            </div>
+            
+            <div id="task1Output" class="output-section">
+                <h3>User Information:</h3>
+                <p id="userInfo"></p>
+            </div>
+        </section>
+        
+        <!-- Lab Task 2 -->
+        <section class="task-section">
+            <h2>🧮 Lab Task 2: Arithmetic and Comparison</h2>
+            <p>Prompt for two numbers and display arithmetic operations and comparison</p>
+            
+            <div class="button-group">
+                <button onclick="task2()" class="secondary">Task 2: Arithmetic Operations</button>
+            </div>
+            
+            <div id="task2Output" class="output-section">
+                <h3>Arithmetic Results:</h3>
+                <p id="arithmeticResults"></p>
+            </div>
+        </section>
+        
+        <!-- Console Output Display -->
+        <div class="console-output">
+            <div class="console-title">
+                <span>📟 Browser Console Output</span>
+                <small>(Press F12 to open Dev Tools)</small>
+            </div>
+            <div id="consoleContent">
+                Console output will appear here as you click buttons...
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Course: CSS-336 (2+1) | Semester: Fall 2025</p>
+        <p>Name: [Your Name] | Registration ID: [Your ID]</p>
+    </footer>
+
+    <script>
+        // Utility function to update console display
+        function updateConsole(message) {
+            const consoleDiv = document.getElementById('consoleContent');
+            consoleDiv.innerHTML += message + '<br>';
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            
+            // Also log to browser console
+            console.log(message);
+        }
+        
+        // Clear console display
+        function clearConsole() {
+            document.getElementById('consoleContent').innerHTML = '';
+            console.clear();
+        }
+        
+        // Given Code Snippet 1: Displaying Messages
+        function demoAlert() {
+            alert("Welcome to JavaScript!");
+            updateConsole("✓ Alert shown: 'Welcome to JavaScript!'");
+        }
+        
+        function demoConsole() {
+            console.log("Hello Students!");
+            updateConsole("✓ Console logged: 'Hello Students!'");
+        }
+        
+        // Given Code Snippet 2: Variables and Data Types
+        function demoDataTypes() {
+            clearConsole();
+            updateConsole("=== Data Types Demonstration ===");
+            
+            var name = "Ali";
+            var age = 20;
+            var isStudent = true;
+            var marks;
+            var value = null;
+            
+            updateConsole("var name = 'Ali'; // typeof name: " + typeof name);
+            updateConsole("var age = 20; // typeof age: " + typeof age);
+            updateConsole("var isStudent = true; // typeof isStudent: " + typeof isStudent);
+            updateConsole("var marks; // typeof marks: " + typeof marks);
+            updateConsole("var value = null; // typeof value: " + typeof value);
+            
+            alert("Check the console for data types output (Press F12)");
+        }
+        
+        // Given Code Snippet 3: String and Arithmetic Operations
+        function demoOperations() {
+            clearConsole();
+            updateConsole("=== String and Arithmetic Operations ===");
+            
+            var country = "Pakistan";
+            updateConsole("var country = 'Pakistan';");
+            updateConsole("Concatenation: 'I love ' + country = " + ("I love " + country));
+            updateConsole("String slice(0, 4): " + country.slice(0, 4));
+            
+            var a = 10, b = 3;
+            updateConsole("\nvar a = 10, b = 3;");
+            updateConsole("Sum: a + b = " + (a + b));
+            updateConsole("Difference: a - b = " + (a - b));
+            updateConsole("Product: a * b = " + (a * b));
+            updateConsole("Quotient: a / b = " + (a / b).toFixed(2));
+            updateConsole("Modulus: a % b = " + (a % b));
+            updateConsole("Comparison: a > b = " + (a > b));
+            
+            alert("Check console for string and arithmetic operations");
+        }
+        
+        // Lab Task 1: User Information
+        function task1() {
+            clearConsole();
+            updateConsole("=== Task 1: User Information ===");
+            
+            // Prompt for Name
+            let name = prompt("Please enter your name:", "Hifza");
+            if (name === null || name.trim() === "") {
+                alert("Operation cancelled or no name entered!");
+                updateConsole("❌ User cancelled or entered empty name");
+                return;
+            }
+            
+            // Prompt for Registration ID
+            let regId = prompt("Please enter your Registration ID:", "FA22-BCE-074");
+            if (regId === null || regId.trim() === "") {
+                alert("Operation cancelled or no Registration ID entered!");
+                updateConsole("❌ User cancelled or entered empty Registration ID");
+                return;
+            }
+            
+            // Display using alert
+            let message = `User Information:\n\nName: ${name}\nRegistration ID: ${regId}`;
+            alert(message);
+            
+            // Display on webpage
+            document.getElementById('userInfo').innerHTML = 
+                `<strong>Name:</strong> ${name}<br><strong>Registration ID:</strong> ${regId}`;
+            document.getElementById('task1Output').style.display = 'block';
+            
+            // Log to console
+            updateConsole("✓ Name entered: " + name);
+            updateConsole("✓ Registration ID entered: " + regId);
+            updateConsole("✓ Data type of name: " + typeof name);
+            updateConsole("✓ Data type of regId: " + typeof regId);
+        }
+        
+        // Lab Task 2: Arithmetic and Comparison
+        function task2() {
+            clearConsole();
+            updateConsole("=== Task 2: Arithmetic and Comparison ===");
+            
+            // Prompt for first number
+            let num1Input = prompt("Enter the first number:", "10");
+            if (num1Input === null || num1Input.trim() === "") {
+                alert("Operation cancelled or no number entered!");
+                updateConsole("❌ User cancelled or entered empty number");
+                return;
+            }
+            
+            // Prompt for second number
+            let num2Input = prompt("Enter the second number:", "3");
+            if (num2Input === null || num2Input.trim() === "") {
+                alert("Operation cancelled or no number entered!");
+                updateConsole("❌ User cancelled or entered empty number");
+                return;
+            }
+            
+            // Convert to numbers
+            let num1 = parseFloat(num1Input);
+            let num2 = parseFloat(num2Input);
+            
+            // Validate numbers
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Please enter valid numbers!");
+                updateConsole("❌ Invalid numbers entered");
+                return;
+            }
+            
+            // Perform calculations
+            let sum = num1 + num2;
+            let difference = num1 - num2;
+            let product = num1 * num2;
+            let quotient = num2 !== 0 ? num1 / num2 : "Undefined (division by zero)";
+            let comparison = num1 > num2;
+            let modulus = num2 !== 0 ? num1 % num2 : "Undefined (division by zero)";
+            
+            // Create results message
+            let resultsMessage = `Arithmetic Results:\n\n` +
+                `Numbers: ${num1} and ${num2}\n\n` +
+                `Sum: ${num1} + ${num2} = ${sum}\n` +
+                `Difference: ${num1} - ${num2} = ${difference}\n` +
+                `Product: ${num1} × ${num2} = ${product}\n` +
+                `Quotient: ${num1} ÷ ${num2} = ${quotient}\n` +
+                `Modulus: ${num1} % ${num2} = ${modulus}\n` +
+                `Comparison: ${num1} > ${num2} = ${comparison}`;
+            
+            // Display using alert
+            alert(resultsMessage);
+            
+            // Display on webpage
+            let htmlResults = `
+                <strong>Numbers:</strong> ${num1} and ${num2}<br><br>
+                <strong>Sum:</strong> ${num1} + ${num2} = ${sum}<br>
+                <strong>Difference:</strong> ${num1} - ${num2} = ${difference}<br>
+                <strong>Product:</strong> ${num1} × ${num2} = ${product}<br>
+                <strong>Quotient:</strong> ${num1} ÷ ${num2} = ${quotient}<br>
+                <strong>Modulus:</strong> ${num1} % ${num2} = ${modulus}<br>
+                <strong>Comparison:</strong> ${num1} > ${num2} = ${comparison}
+            `;
+            document.getElementById('arithmeticResults').innerHTML = htmlResults;
+            document.getElementById('task2Output').style.display = 'block';
+            
+            // Log to console
+            updateConsole(`✓ Numbers entered: ${num1}, ${num2}`);
+            updateConsole(`✓ Sum: ${num1} + ${num2} = ${sum}`);
+            updateConsole(`✓ Difference: ${num1} - ${num2} = ${difference}`);
+            updateConsole(`✓ Product: ${num1} × ${num2} = ${product}`);
+            updateConsole(`✓ Quotient: ${num1} ÷ ${num2} = ${quotient}`);
+            updateConsole(`✓ Modulus: ${num1} % ${num2} = ${modulus}`);
+            updateConsole(`✓ Comparison (${num1} > ${num2}): ${comparison}`);
+            updateConsole(`✓ Data type of num1: ${typeof num1}`);
+            updateConsole(`✓ Data type of num2: ${typeof num2}`);
+        }
+        
+        // Initialize console with welcome message
+        window.onload = function() {
+            updateConsole("=== Experiment 7: JavaScript Fundamentals ===");
+            updateConsole("Page loaded successfully!");
+            updateConsole("Click buttons to test JavaScript functionality...");
+            updateConsole("=============================================");
+        };
+    </script>
+</body>
+</html>
