@@ -3,48 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Web Technologies Experiments</title>
     <style>
-        h1{
-            text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        div{
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        
+        header {
             text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4a6fa5;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .logo-container {
+            margin: 20px 0;
+        }
+        
+        .logo {
+            height: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #4a6fa5;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: #4a6fa5;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e1e1e1;
+        }
+        
+        tr:hover {
+            background: #f5f7fa;
+        }
+        
+        .experiments-section {
+            margin: 40px 0;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2:before {
+            content: "📚";
+        }
+        
+        .experiments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .experiment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .experiment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+            border-color: #4a6fa5;
+        }
+        
+        .experiment-card:nth-child(6),
+        .experiment-card:nth-child(7),
+        .experiment-card:nth-child(8) {
+            background: linear-gradient(135deg, #e3f2fd, #f3e5f5);
+            border-color: #bbdefb;
+        }
+        
+        .experiment-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4a6fa5;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .experiment-title {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .experiment-desc {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .experiment-link {
+            display: inline-block;
+            background: #4a6fa5;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #4a6fa5;
+        }
+        
+        .experiment-link:hover {
+            background: white;
+            color: #4a6fa5;
+            transform: scale(1.05);
+        }
+        
+        .assignment-note {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 30px;
+            color: #856404;
+            font-weight: 500;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e1e1;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .experiments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .experiment-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Web Technologies Handouts</h1>
-    <div>
-        <img  src="cui.jpg" alt="Comsats Logo" style="height: 200px;" >
-    
-    <h2>Course: CSS-336(2+1)</h2>
-    <p>Semester: Fall 2025</p>
-    <table  style="margin-left: 400px;" border="2">
-        <tr>
-            <th>Name</th>
-            <th>Registration ID:</th>
-            <th>Section</th>
-        </tr>
-        <tr>
-            <td>Hifza Maqsood </td>
-            <td>FA22-BCE-074</td>
-            <td>BCE-7B</td>
-        </tr>
-    </table>
+    <div class="container">
+        <header>
+            <h1>Web Technologies Handouts</h1>
+            <p class="subtitle">Course: CSS-336 (2+1) | Semester: Fall 2025</p>
+            
+            <div class="logo-container">
+                <img class="logo" src="cui.jpg" alt="COMSATS University Logo">
+            </div>
+        </header>
+        
+        <div class="info-section">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Registration ID</th>
+                    <th>Section</th>
+                </tr>
+                <tr>
+                    <td>Hifza Maqsood</td>
+                    <td>FA22-BCE-074</td>
+                    <td>BCE-7B</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="experiments-section">
+            <h2>Laboratory Experiments</h2>
+            
+            <div class="experiments-grid">
+                <!-- Experiment 1 -->
+                <div class="experiment-card">
+                    <div class="experiment-number">1</div>
+                    <h3 class="experiment-title">Introduction to HTML Basics</h3>
+                    <p class="experiment-desc">Learn fundamental HTML structure and elements</p>
+                    <a href="./Lab1.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 2 -->
+                <div class="experiment-card">
+                    <div class="experiment-number">2</div>
+                    <h3 class="experiment-title">Creating and Publishing Online Lab Manual</h3>
+                    <p class="experiment-desc">Host webpages using GitHub Pages</p>
+                    <a href="./Lab2.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 3 -->
+                <div class="experiment-card">
+                    <div class="experiment-number">3</div>
+                    <h3 class="experiment-title">Working with Tables, Lists, Images, and Hyperlinks</h3>
+                    <p class="experiment-desc">Advanced HTML elements and attributes</p>
+                    <a href="./Lab3.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 4 -->
+                <div class="experiment-card">
+                    <div class="experiment-number">4</div>
+                    <h3 class="experiment-title">Applying CSS to HTML</h3>
+                    <p class="experiment-desc">Inline, Internal, and External CSS styling</p>
+                    <a href="./Lab4.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 5 -->
+                <div class="experiment-card">
+                    <div class="experiment-number">5</div>
+                    <h3 class="experiment-title">Exploring CSS Selectors</h3>
+                    <p class="experiment-desc">Master CSS selectors and specificity</p>
+                    <a href="./lab5.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 6 - NEW -->
+                <div class="experiment-card">
+                    <div class="experiment-number">6</div>
+                    <h3 class="experiment-title">Web Responsiveness</h3>
+                    <p class="experiment-desc">CSS Flexbox and Media Queries for responsive design</p>
+                    <a href="./lab6.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 7 - NEW -->
+                <div class="experiment-card">
+                    <div class="experiment-number">7</div>
+                    <h3 class="experiment-title">JavaScript Fundamentals</h3>
+                    <p class="experiment-desc">Variables, data types, operators, and console interactivity</p>
+                    <a href="./lab7.html" class="experiment-link">View Experiment</a>
+                </div>
+                
+                <!-- Experiment 8 - NEW -->
+                <div class="experiment-card">
+                    <div class="experiment-number">8</div>
+                    <h3 class="experiment-title">JavaScript Event Listeners</h3>
+                    <p class="experiment-desc">Interactive webpages with DOM manipulation using event listeners</p>
+                    <a href="./lab8.html" class="experiment-link">View Experiment</a>
+                </div>
+            </div>
+            
+            <!-- Assignment Section -->
+            <div class="assignment-note">
+                <strong>Assignment 03:</strong> Quiz Web Application - 
+                <a href="./quiz-app/" style="color: #4a6fa5; font-weight: bold;">Click here to access Quiz App</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Department of Computer Science | COMSATS University Islamabad</p>
+            <p>© 2025 Web Technologies Laboratory | All experiments are for educational purposes</p>
+        </footer>
     </div>
-    <br>
-    <br>
-    <p>Following are the list of experiments:</p>
-    <ol>
-        <li><a href="./Lab1.html">Experiment 1: Introduction to HTML Basics</a></li><br>
-        <li><a href="./Lab2.html">Experiment 2: Creating and Publishing an Online Lab Manual</a></li><br>
-        <li><a href="./Lab3.html">Experiment 3: Introduction to HTML Basics</a></li><br>
-        <li><a href="./Lab4.html">Experiment 4: Applying CSS to HTML (Inline, Internal, and External Styles)</a></li><br>
-        <li><a href="./lab5.html">Experiment 5: Css</a></li><br>
-        <!-- ADD THIS LINE FOR QUIZ -->
-        <li><a href="./quiz-app/">Assigment 03: Quiz Web Application</a></li><br>
-    </ol>
-
 </body>
 </html>
