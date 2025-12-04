@@ -251,6 +251,16 @@
             font-size: 0.9rem;
         }
         
+        .reflection {
+            background-color: #e8f6f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #2ecc71;
+            font-style: italic;
+            line-height: 1.7;
+        }
+        
         footer {
             text-align: center;
             margin-top: 30px;
@@ -363,6 +373,11 @@
             &nbsp;&nbsp;// Log the action<br>
             &nbsp;&nbsp;logAction(`Executed with ${effectType} effect`);<br>
             }
+        </div>
+        
+        <div class="reflection">
+            <h4>Reflective Learning</h4>
+            <p>This experiment served as a practical bridge between theoretical JavaScript concepts and real-world application, fundamentally transforming my understanding of callback functions and modular design. By building an interactive control system where each button triggers specific callback functions like <code>changeColor()</code> and <code>changeShape()</code>, I moved beyond abstract definitions to tangible implementation—witnessing firsthand how functions can be passed as arguments and executed later in response to events. The modular approach, where each action was encapsulated in its own reusable function, demonstrated how clean separation of concerns leads to maintainable code: I could modify the shape transformation logic without touching color-changing functionality, and the higher-order function <code>performWithEffect()</code> beautifully illustrated how callbacks enable flexible, composable behavior. Through this hands-on experience, I internalized that callback functions aren't just technical constructs but essential patterns for creating responsive, event-driven applications where functionality can be dynamically assembled like building blocks, ultimately revealing how modular JavaScript design empowers developers to write scalable, organized code that adapts to changing requirements.</p>
         </div>
     </div>
     
