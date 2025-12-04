@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment 9: Advanced Interaction with Callbacks</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+        
+        .subtitle {
+            color: #bdc3c7;
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .control-panel {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .output-area {
+            flex: 2;
+            min-width: 400px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .control-group {
+            margin-bottom: 25px;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 8px 8px 8px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-success {
+            background-color: #2ecc71;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-warning {
+            background-color: #f39c12;
+        }
+        
+        .btn-warning:hover {
+            background-color: #d35400;
+        }
+        
+        .slider-container {
+            margin: 15px 0;
+        }
+        
+        .slider-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+        
+        .visual-box {
+            width: 100%;
+            height: 200px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        
+        .shape {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            border-radius: 10px;
+            transition: all 0.5s ease;
+        }
+        
+        .log {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+            background-color: white;
+        }
+        
+        .log-time {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+        
+        .log-message {
+            color: #2c3e50;
+        }
+        
+        .action-counter {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            text-align: center;
+        }
+        
+        .counter-item {
+            flex: 1;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            margin: 0 10px;
+        }
+        
+        .counter-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .counter-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .code-example {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Experiment 9: Advanced Interaction with Callback Functions</h1>
+        <p class="subtitle">Implementing a Multi-Action Control System with Modular JavaScript</p>
+    </header>
+    
+    <div class="container">
+        <section class="control-panel">
+            <h2>Control Panel</h2>
+            
+            <div class="control-group">
+                <h3>Action Buttons</h3>
+                <button class="btn" id="action1">Change Color</button>
+                <button class="btn btn-success" id="action2">Change Shape</button>
+                <button class="btn btn-warning" id="action3">Animate</button>
+                <button class="btn btn-danger" id="action4">Reset All</button>
+            </div>
+            
+            <div class="control-group">
+                <h3>Mode Selector</h3>
+                <button class="btn" id="mode1">Mode 1: Simple</button>
+                <button class="btn" id="mode2">Mode 2: Random</button>
+                <button class="btn" id="mode3">Mode 3: Sequence</button>
+            </div>
+            
+            <div class="control-group">
+                <h3>Size Controller</h3>
+                <div class="slider-container">
+                    <label class="slider-label">Shape Size: <span id="sizeValue">100</span>px</label>
+                    <input type="range" min="50" max="200" value="100" class="slider" id="sizeSlider">
+                </div>
+                
+                <div class="slider-container">
+                    <label class="slider-label">Rotation: <span id="rotationValue">0</span>°</label>
+                    <input type="range" min="0" max="360" value="0" class="slider" id="rotationSlider">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3>Special Actions</h3>
+                <button class="btn btn-warning" id="specialAction">Special Action (Higher-Order)</button>
+                <p style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d;">This button uses a higher-order function that accepts a callback as an argument.</p>
+            </div>
+        </section>
+        
+        <section class="output-area">
+            <h2>Output Display</h2>
+            
+            <div class="visual-box" id="visualBox">
+                <div class="shape" id="shape"></div>
+            </div>
+            
+            <div class="action-counter">
+                <div class="counter-item">
+                    <div class="counter-value" id="colorCount">0</div>
+                    <div class="counter-label">Color Changes</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="shapeCount">0</div>
+                    <div class="counter-label">Shape Changes</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="actionCount">0</div>
+                    <div class="counter-label">Total Actions</div>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 25px;">Action Log</h3>
+            <div class="log" id="actionLog">
+                <div class="log-entry">
+                    <div class="log-time">System started at <span id="startTime"></span></div>
+                    <div class="log-message">Welcome! Use the controls to interact with the system.</div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <div class="instructions">
+        <h3>How This Demonstrates Callback Functions & Higher-Order Functions</h3>
+        <ul>
+            <li><strong>Action Buttons</strong> use callback functions to trigger different behaviors</li>
+            <li><strong>Special Action Button</strong> demonstrates a higher-order function that accepts a callback as an argument</li>
+            <li><strong>Mode Selector</strong> uses a switch statement to route different actions</li>
+            <li><strong>Sliders</strong> use anonymous callback functions for real-time updates</li>
+            <li>All functions are modular and reusable following the experiment requirements</li>
+        </ul>
+        
+        <div class="code-example">
+            // Example higher-order function from this experiment:<br>
+            function performWithEffect(actionCallback, effectType) {<br>
+            &nbsp;&nbsp;// Apply visual effect<br>
+            &nbsp;&nbsp;applyVisualEffect(effectType);<br>
+            &nbsp;&nbsp;// Execute the callback function passed as argument<br>
+            &nbsp;&nbsp;actionCallback();<br>
+            &nbsp;&nbsp;// Log the action<br>
+            &nbsp;&nbsp;logAction(`Executed with ${effectType} effect`);<br>
+            }
+        </div>
+    </div>
+    
+    <footer>
+        <p>Experiment 9: Implementing Advanced Interaction Logic Using Callback Functions in JavaScript</p>
+        <p>This lab demonstrates modular JavaScript with callbacks, higher-order functions, and event handling.</p>
+    </footer>
+
+    <script>
+        // Get DOM elements
+        const shape = document.getElementById('shape');
+        const visualBox = document.getElementById('visualBox');
+        const actionLog = document.getElementById('actionLog');
+        const colorCountEl = document.getElementById('colorCount');
+        const shapeCountEl = document.getElementById('shapeCount');
+        const actionCountEl = document.getElementById('actionCount');
+        const sizeSlider = document.getElementById('sizeSlider');
+        const sizeValue = document.getElementById('sizeValue');
+        const rotationSlider = document.getElementById('rotationSlider');
+        const rotationValue = document.getElementById('rotationValue');
+        const startTimeEl = document.getElementById('startTime');
+        
+        // Initialize counters
+        let colorCount = 0;
+        let shapeCount = 0;
+        let actionCount = 0;
+        let currentMode = 'simple';
+        
+        // Set start time
+        const startTime = new Date();
+        startTimeEl.textContent = `${startTime.getHours()}:${startTime.getMinutes().toString().padStart(2, '0')}`;
+        
+        // Colors and shapes for the visual element
+        const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c'];
+        const shapes = ['square', 'circle', 'triangle', 'diamond', 'rectangle'];
+        
+        // Function to reset shape to default square
+        function resetToDefaultShape() {
+            shape.style.cssText = `
+                width: 100px;
+                height: 100px;
+                background-color: #3498db;
+                border-radius: 10px;
+                transform: none;
+                border: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                clip-path: none;
+            `;
+        }
+        
+        // ====================
+        // CALLBACK FUNCTIONS
+        // ====================
+        
+        // Callback 1: Change color of the shape
+        function changeColor() {
+            let newColor;
+            
+            // Use switch based on current mode
+            switch(currentMode) {
+                case 'simple':
+                    // Simple mode: cycle through colors in order
+                    newColor = colors[colorCount % colors.length];
+                    break;
+                case 'random':
+                    // Random mode: pick random color
+                    newColor = colors[Math.floor(Math.random() * colors.length)];
+                    break;
+                case 'sequence':
+                    // Sequence mode: use a specific sequence
+                    const sequence = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12'];
+                    newColor = sequence[colorCount % sequence.length];
+                    break;
+            }
+            
+            shape.style.backgroundColor = newColor;
+            colorCount++;
+            colorCountEl.textContent = colorCount;
+            logAction(`Color changed to ${newColor} (Mode: ${currentMode})`);
+        }
+        
+        // Callback 2: Change shape type - FIXED VERSION
+        function changeShape() {
+            let shapeClass;
+            
+            switch(currentMode) {
+                case 'simple':
+                    shapeClass = shapes[shapeCount % shapes.length];
+                    break;
+                case 'random':
+                    shapeClass = shapes[Math.floor(Math.random() * shapes.length)];
+                    break;
+                case 'sequence':
+                    shapeClass = shapes[shapeCount % shapes.length];
+                    break;
+            }
+            
+            // First reset to default square shape
+            resetToDefaultShape();
+            
+            // Apply shape based on selection
+            switch(shapeClass) {
+                case 'square':
+                    // Already square from reset
+                    shape.style.borderRadius = '10px';
+                    break;
+                    
+                case 'circle':
+                    shape.style.borderRadius = '50%';
+                    break;
+                    
+                case 'triangle':
+                    // Create triangle using borders
+                    shape.style.width = '0';
+                    shape.style.height = '0';
+                    shape.style.backgroundColor = 'transparent';
+                    shape.style.borderLeft = '50px solid transparent';
+                    shape.style.borderRight = '50px solid transparent';
+                    shape.style.borderBottom = '100px solid ' + (shape.style.backgroundColor || '#3498db');
+                    break;
+                    
+                case 'diamond':
+                    shape.style.borderRadius = '0';
+                    shape.style.transform = 'rotate(45deg)';
+                    break;
+                    
+                case 'rectangle':
+                    shape.style.width = '150px';
+                    shape.style.height = '80px';
+                    shape.style.borderRadius = '5px';
+                    break;
+            }
+            
+            shapeCount++;
+            shapeCountEl.textContent = shapeCount;
+            logAction(`Shape changed to ${shapeClass} (Mode: ${currentMode})`);
+        }
+        
+        // Callback 3: Animate the shape
+        function animateShape() {
+            // Save current transform before animation
+            const currentTransform = shape.style.transform || '';
+            
+            // Different animations based on mode
+            switch(currentMode) {
+                case 'simple':
+                    shape.style.transition = 'all 0.5s ease';
+                    shape.style.transform = currentTransform + ' scale(1.3)';
+                    setTimeout(() => {
+                        shape.style.transform = currentTransform + ' scale(1)';
+                    }, 500);
+                    logAction("Simple animation: Scale up and down");
+                    break;
+                    
+                case 'random':
+                    const animations = ['spin', 'bounce', 'shake', 'fade'];
+                    const randomAnim = animations[Math.floor(Math.random() * animations.length)];
+                    
+                    switch(randomAnim) {
+                        case 'spin':
+                            shape.style.transition = 'transform 1s ease';
+                            shape.style.transform = currentTransform + ' rotate(360deg)';
+                            setTimeout(() => {
+                                shape.style.transform = currentTransform;
+                            }, 1000);
+                            break;
+                        case 'bounce':
+                            shape.style.transition = 'transform 0.3s ease';
+                            shape.style.transform = currentTransform + ' translateY(-30px)';
+                            setTimeout(() => {
+                                shape.style.transform = currentTransform;
+                            }, 300);
+                            break;
+                        default:
+                            shape.style.transition = 'all 0.5s ease';
+                            shape.style.opacity = '0.5';
+                            setTimeout(() => {
+                                shape.style.opacity = '1';
+                            }, 500);
+                    }
+                    logAction(`Random animation: ${randomAnim}`);
+                    break;
+                    
+                case 'sequence':
+                    const seqAnim = ['rotate', 'scale', 'skew'][actionCount % 3];
+                    
+                    switch(seqAnim) {
+                        case 'rotate':
+                            shape.style.transform = currentTransform + ' rotate(180deg)';
+                            break;
+                        case 'scale':
+                            shape.style.transform = currentTransform + ' scale(1.5)';
+                            break;
+                        case 'skew':
+                            shape.style.transform = currentTransform + ' skew(20deg, 10deg)';
+                            break;
+                    }
+                    
+                    setTimeout(() => {
+                        shape.style.transform = currentTransform;
+                    }, 500);
+                    logAction(`Sequential animation: ${seqAnim}`);
+                    break;
+            }
+        }
+        
+        // Callback 4: Reset everything
+        function resetAll() {
+            resetToDefaultShape();
+            
+            // Reset sliders
+            sizeSlider.value = 100;
+            sizeValue.textContent = '100';
+            rotationSlider.value = 0;
+            rotationValue.textContent = '0';
+            
+            // Reset counters
+            colorCount = 0;
+            shapeCount = 0;
+            actionCount = 0;
+            colorCountEl.textContent = '0';
+            shapeCountEl.textContent = '0';
+            actionCountEl.textContent = '0';
+            
+            // Reset mode
+            currentMode = 'simple';
+            
+            logAction("All settings reset to default");
+        }
+        
+        // ====================
+        // HIGHER-ORDER FUNCTION
+        // ====================
+        
+        // This is a higher-order function that accepts a callback function as an argument
+        function performWithEffect(actionCallback, effectType) {
+            // Apply visual effect to the box
+            applyVisualEffect(effectType);
+            
+            // Execute the callback function that was passed as an argument
+            actionCallback();
+            
+            // Update action counter
+            actionCount++;
+            actionCountEl.textContent = actionCount;
+            
+            // Log what happened
+            logAction(`Special action executed with ${effectType} effect`);
+        }
+        
+        // Helper function for visual effects
+        function applyVisualEffect(effectType) {
+            visualBox.style.transition = 'all 0.5s ease';
+            
+            switch(effectType) {
+                case 'glow':
+                    visualBox.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.8)';
+                    setTimeout(() => {
+                        visualBox.style.boxShadow = '';
+                    }, 1000);
+                    break;
+                case 'pulse':
+                    visualBox.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        visualBox.style.transform = '';
+                    }, 500);
+                    break;
+                case 'colorShift':
+                    visualBox.style.backgroundColor = '#f0f8ff';
+                    setTimeout(() => {
+                        visualBox.style.backgroundColor = '#ecf0f1';
+                    }, 800);
+                    break;
+            }
+        }
+        
+        // ====================
+        // EVENT LISTENERS WITH CALLBACKS
+        // ====================
+        
+        // Action buttons with callback functions
+        document.getElementById('action1').addEventListener('click', changeColor);
+        document.getElementById('action2').addEventListener('click', changeShape);
+        document.getElementById('action3').addEventListener('click', animateShape);
+        document.getElementById('action4').addEventListener('click', resetAll);
+        
+        // Mode selector buttons
+        document.getElementById('mode1').addEventListener('click', function() {
+            currentMode = 'simple';
+            logAction("Mode changed to: Simple");
+        });
+        
+        document.getElementById('mode2').addEventListener('click', function() {
+            currentMode = 'random';
+            logAction("Mode changed to: Random");
+        });
+        
+        document.getElementById('mode3').addEventListener('click', function() {
+            currentMode = 'sequence';
+            logAction("Mode changed to: Sequence");
+        });
+        
+        // Sliders with anonymous callback functions
+        sizeSlider.addEventListener('input', function() {
+            const size = this.value;
+            sizeValue.textContent = size;
+            shape.style.width = `${size}px`;
+            shape.style.height = `${size}px`;
+        });
+        
+        rotationSlider.addEventListener('input', function() {
+            const rotation = this.value;
+            rotationValue.textContent = rotation;
+            
+            // Preserve other transforms, just add rotation
+            const currentTransform = shape.style.transform || '';
+            // Remove any existing rotation
+            const withoutRotation = currentTransform.replace(/rotate\([^)]+\)/g, '');
+            shape.style.transform = withoutRotation + ` rotate(${rotation}deg)`;
+        });
+        
+        // Special action button using higher-order function
+        document.getElementById('specialAction').addEventListener('click', function() {
+            // Choose a random effect
+            const effects = ['glow', 'pulse', 'colorShift'];
+            const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+            
+            // Choose a random action callback
+            const actions = [changeColor, changeShape, animateShape];
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+            
+            // Use the higher-order function with the random callback
+            performWithEffect(randomAction, randomEffect);
+        });
+        
+        // ====================
+        // UTILITY FUNCTIONS
+        // ====================
+        
+        // Function to log actions
+        function logAction(message) {
+            const now = new Date();
+            const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <div class="log-time">${timeString}</div>
+                <div class="log-message">${message}</div>
+            `;
+            
+            actionLog.prepend(logEntry);
+            
+            // Limit log to 10 entries
+            if (actionLog.children.length > 10) {
+                actionLog.removeChild(actionLog.lastChild);
+            }
+            
+            // Update total action counter
+            actionCount++;
+            actionCountEl.textContent = actionCount;
+        }
+        
+        // Initial log entry
+        logAction("System initialized. Ready for interaction!");
+    </script>
+</body>
+</html>
