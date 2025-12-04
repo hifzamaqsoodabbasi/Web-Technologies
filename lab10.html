@@ -307,6 +307,16 @@
             font-size: 0.9rem;
         }
         
+        .reflection {
+            background-color: #e8f6f3;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #2ecc71;
+            font-style: italic;
+            line-height: 1.7;
+        }
+        
         footer {
             text-align: center;
             margin-top: 30px;
@@ -448,6 +458,11 @@
             &nbsp;&nbsp;&nbsp;&nbsp;return "Needs Improvement";<br>
             &nbsp;&nbsp;};<br>
             }
+        </div>
+        
+        <div class="reflection">
+            <h4>Reflective Learning</h4>
+            <p>This experiment fundamentally transformed my understanding of object-oriented programming in JavaScript through practical implementation of constructor functions and modular design. By creating the <code>Student</code> constructor function, I moved beyond theoretical concepts to witness how blueprint functions enable consistent object creation with encapsulated properties and methods—each student object became a self-contained entity with its own <code>getStatus()</code> method, demonstrating how data and behavior can be bundled together. The modular approach to CRUD operations revealed the power of separation of concerns: <code>addStudent()</code> handled object creation, <code>displayStudents()</code> managed presentation logic, <code>updateStudent()</code> focused on data modification, and <code>deleteStudent()</code> addressed removal—each function with a single, clear responsibility that made debugging and testing remarkably straightforward. Through implementing this system, I realized that constructor functions aren't just syntactic sugar but essential patterns for scalable applications, while modular design proved crucial for maintainability as I could modify the search algorithm without touching form validation logic or update statistics calculation without affecting the display rendering. This hands-on experience illuminated how professional JavaScript applications are structured, where clean separation between data models (<code>Student</code> objects), business logic (CRUD operations), and presentation layer (DOM manipulation) creates robust, adaptable systems that can evolve without becoming entangled—ultimately demonstrating how object-oriented principles combined with modular architecture form the foundation of sustainable, real-world software development.</p>
         </div>
     </div>
     
