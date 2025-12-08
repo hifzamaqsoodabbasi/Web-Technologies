@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Toggler</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            padding: 40px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2.8rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .color-toggle-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 18px 36px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+        
+        .color-toggle-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .color-toggle-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .color-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .color-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .current-color {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.05);
+            display: inline-block;
+        }
+        
+        .color-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .instructions {
+            margin-top: 40px;
+            background-color: rgba(0, 0, 0, 0.03);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 600px;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .instructions p {
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        footer {
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .counter {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .color-toggle-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .color-box {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-palette"></i> Color Toggler</h1>
+        <p class="subtitle">Click the button below to toggle between different background colors. The page will cycle through four visually pleasing color themes.</p>
+        
+        <button class="color-toggle-btn" id="colorToggle">
+            <i class="fas fa-sync-alt"></i> Change Background Color
+        </button>
+        
+        <div class="counter">Changes: <span id="changeCount">0</span></div>
+        
+        <div class="current-color">
+            Current Color: <span id="currentColorName">Light Gray</span>
+        </div>
+        
+        <div class="color-display">
+            <div class="color-box" style="background-color: #f0f2f5;">
+                <div>Light Gray</div>
+                <div class="color-name">#f0f2f5</div>
+            </div>
+            <div class="color-box" style="background-color: #e8f5e9; color: #333;">
+                <div>Mint Green</div>
+                <div class="color-name">#e8f5e9</div>
+            </div>
+            <div class="color-box" style="background-color: #fff3e0; color: #333;">
+                <div>Warm Peach</div>
+                <div class="color-name">#fff3e0</div>
+            </div>
+            <div class="color-box" style="background-color: #f3e5f5; color: #333;">
+                <div>Soft Lavender</div>
+                <div class="color-name">#f3e5f5</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> How It Works</h3>
+            <p>This page demonstrates a simple color toggling functionality using JavaScript. Each time you click the "Change Background Color" button, the background color of the page cycles to the next color in the sequence. The current color name and a counter tracking the number of changes are updated in real-time.</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Color Toggler Example | Created with HTML, CSS & JavaScript</p>
+    </footer>
+
+    <script>
+        // Array of colors to cycle through
+        const colors = [
+            { name: "Light Gray", value: "#f0f2f5" },
+            { name: "Mint Green", value: "#e8f5e9" },
+            { name: "Warm Peach", value: "#fff3e0" },
+            { name: "Soft Lavender", value: "#f3e5f5" }
+        ];
+        
+        // Initialize color index and change counter
+        let currentColorIndex = 0;
+        let changeCount = 0;
+        
+        // Get DOM elements
+        const body = document.body;
+        const colorToggleBtn = document.getElementById('colorToggle');
+        const currentColorName = document.getElementById('currentColorName');
+        const changeCountElement = document.getElementById('changeCount');
+        
+        // Function to change the background color
+        function changeBackgroundColor() {
+            // Update to the next color
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+            
+            // Apply the new color to the body
+            const newColor = colors[currentColorIndex];
+            body.style.backgroundColor = newColor.value;
+            
+            // Update the current color name display
+            currentColorName.textContent = newColor.name;
+            
+            // Update the change counter
+            changeCount++;
+            changeCountElement.textContent = changeCount;
+            
+            // Update button text based on next color
+            const nextIndex = (currentColorIndex + 1) % colors.length;
+            colorToggleBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Change to ${colors[nextIndex].name}`;
+        }
+        
+        // Add event listener to the button
+        colorToggleBtn.addEventListener('click', changeBackgroundColor);
+        
+        // Initialize button text
+        colorToggleBtn.innerHTML = `<i class="fas fa-sync-alt"></i> Change to ${colors[1].name}`;
+    </script>
+</body>
+</html>
